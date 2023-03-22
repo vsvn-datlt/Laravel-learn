@@ -15,14 +15,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-    // return $html_content;
 });
 
 Route::prefix("contacts")->name("contacts.")->group(
     function () {
 
         Route::get('/', function () {
-            return "<h1>All contacts</h1>";
+            // return "<h1>All contacts</h1>";
+            return view("contacts/index");
         })
             ->name("index");
 

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,8 +10,9 @@
 </head>
 
 <body>
-    <h1>Welcome View</h1>
-    <a href='{{ route("contacts.index") }} '>All contacts</a>
+    <h1>Contacts.Index View</h1>
+    <a href=' {{ route("contacts.create") }}'>Add new contact</a>
+    <a href='{{ route("contacts.show", 1) }}'>Show contact</a>
 
 </body>
 
