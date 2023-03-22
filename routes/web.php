@@ -68,3 +68,7 @@ Route::get('/companies/{name?}', function ($company_name = null) {
     // ->where("name", "[a-zA-Z ]+") // use regex for contraining
     ->whereAlpha("id") // use build-in function for constraining
 ;
+
+Route::fallback(function () {
+    return "<h1>Sorry, the page does not exist</h1>";
+});
