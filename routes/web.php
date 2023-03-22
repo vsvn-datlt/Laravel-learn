@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+function getCompanies()
+{
+    return [
+        1 => ["name" => "Company One", "contacts" => 3409647897],
+        2 => ["name" => "Company Two", "contacts" => 8765679960],
+        3 => ["name" => "Company Three", "contacts" => 8747964336]
+    ];
+}
+
 function getContacts()
 {
     return [
@@ -33,9 +42,10 @@ Route::prefix("contacts")->name("contacts.")->group(
 
         Route::get('/', function () {
             $contacts = getContacts();
+            $companies = getCompanies();
             // return "<h1>All contacts</h1>";
-            // return view("contacts/index", ["contacts"=>$contacts]);
-            return view("contacts/index")->with("contacts", $contacts);
+            return view("contacts/index", ["contacts" => $contacts, "companies" => $companies]);
+            // return view("contacts/index")->with("contacts", $contacts);
         })
             ->name("index");
 
