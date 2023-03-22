@@ -14,25 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $html_content = '
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Laravel learn</title>
-    </head>
-    <body>
-        <h1>My Contact app</h1>
-        <a href="' . route("contacts.index") . '">All contacts</a>
-        <a href="' . route("contacts.create") . '">Add new contact</a>
-        <a href="' . route("contacts.show", 1) . '">Show contact</a>
-    </body>
-    </html>
-    ';
-    // return view('welcome');
-    return $html_content;
+    return view('welcome');
+    // return $html_content;
 });
 
 Route::prefix("contacts")->name("contacts.")->group(
@@ -69,6 +52,7 @@ Route::get('/companies/{name?}', function ($company_name = null) {
     ->whereAlpha("id") // use build-in function for constraining
 ;
 
+// Fallback routes
 Route::fallback(function () {
     return "<h1>Sorry, the page does not exist</h1>";
 });
