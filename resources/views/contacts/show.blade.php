@@ -11,6 +11,8 @@
 
 <body>
     <h1>Contacts.Show View</h1>
+    <p>Name: {{ $contact["name"] }}</p>
+    <p>Phone: {{ $contact["phone"] }}</p>
     <a href=' {{ route("contacts.index") }}'>Back to contact</a>
 
 </body>

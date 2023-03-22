@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+function getContacts()
+{
+    return [
+        1 => ['name' => 'Name 1', 'phone' => '1234567890'],
+        2 => ['name' => 'Name 2', 'phone' => '2345678901'],
+        3 => ['name' => 'Name 3', 'phone' => '3456789012'],
+    ];
+}
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -21,14 +30,10 @@ Route::prefix("contacts")->name("contacts.")->group(
     function () {
 
         Route::get('/', function () {
-            $contacts = [
-                1 => ['name' => 'Name 1', 'phone' => '1234567890'],
-                2 => ['name' => 'Name 2', 'phone' => '2345678901'],
-                3 => ['name' => 'Name 3', 'phone' => '3456789012'],
-            ];
-            
+            $contacts = getContacts();
             // return "<h1>All contacts</h1>";
-            return view("contacts/index", ["contacts"=>$contacts]);
+            // return view("contacts/index", ["contacts"=>$contacts]);
+            return view("contacts/index")->with("contacts", $contacts);
         })
             ->name("index");
 
@@ -40,12 +45,17 @@ Route::prefix("contacts")->name("contacts.")->group(
 
         // Routes parameters
         Route::get('/{id}', function ($id) {
+            $contacts = getContacts();
+            // abort_if(!isset($contacts[$id]), 404);
+            abort_unless(isset($contacts[$id]), 404);
+            $contact = $contacts[$id];
             // return "Contact " . $id;
-            return view("contacts/show");
+            // return view("contacts/show");
+            return view("contacts/show")->with("contact", $contact);
         })
             // ->where("id", "\d+") // use regex for contraining
             ->whereNumber("id") // use build-in function for constraining
-            ->name("show");;
+            ->name("show");
     }
 );
 
