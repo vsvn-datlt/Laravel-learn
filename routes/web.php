@@ -16,9 +16,11 @@ use Illuminate\Support\Facades\Route;
 function getContacts()
 {
     return [
-        1 => ['name' => 'Name 1', 'phone' => '1234567890'],
-        2 => ['name' => 'Name 2', 'phone' => '2345678901'],
-        3 => ['name' => 'Name 3', 'phone' => '3456789012'],
+        1 => ['first_name' => 'Alfred', "last_name" => "Kuhlman", "email" => "alfred@gmail.com", 'phone' => '7863510562', "company" => "Company One", "address" => "Lorem ipsum dolor"],
+        2 => ['first_name' => 'Frederick', "last_name" => "Jerde", "email" => "frederick@gmail.com", 'phone' => '9465258086', "company" => "Company One", "address" => "Lorem ipsum dolor"],
+        3 => ['first_name' => 'Joannie', "last_name" => "McLaughlin", "email" => "joannie@gmail.com", 'phone' => '2568876437', "company" => "Company Two", "address" => "Lorem ipsum dolor"],
+        4 => ['first_name' => 'Odie', "last_name" => "Koss", "email" => "odie@gmail.com", 'phone' => '9896874639', "company" => "Company Two", "address" => "Lorem ipsum dolor"],
+        5 => ['first_name' => 'Edna', "last_name" => "Ondricka", "email" => "edna@gmail.com", 'phone' => '4698596834', "company" => "Company Three", "address" => "Lorem ipsum dolor"],
     ];
 }
 

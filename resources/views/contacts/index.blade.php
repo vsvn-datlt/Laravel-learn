@@ -1,5 +1,7 @@
 @extends ("layouts.main")
 
+@section("title", "Contact App | All Contacts")
+
 @section('content')
 
 <main class="py-5">
@@ -11,7 +13,7 @@
                         <div class="d-flex align-items-center">
                             <h2 class="mb-0">All Contacts</h2>
                             <div class="ml-auto">
-                                <a href="form.html" class="btn btn-success"><i class="fa fa-plus-circle"></i> Add New</a>
+                                <a href='{{ route("contacts.create") }}' class="btn btn-success"><i class="fa fa-plus-circle"></i> Add New</a>
                             </div>
                         </div>
                     </div>
@@ -48,8 +50,11 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Name</th>
+                                    <th scope="col">First Name</th>
+                                    <th scope="col">Last Name</th>
                                     <th scope="col">Phone</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Company</th>
                                     <th scope="col">Detail</th>
                                 </tr>
                             </thead>
@@ -57,10 +62,15 @@
                                 <?php foreach ($contacts as $id => $contact) : ?>
                                     <tr>
                                         <th scope="row">{{ $id }}</th>
-                                        <td>{{ $contact['name'] }}</td>
+                                        <td>{{ $contact['first_name'] }}</td>
+                                        <td>{{ $contact['last_name'] }}</td>
                                         <td>{{ $contact['phone'] }}</td>
+                                        <td>{{ $contact['email'] }}</td>
+                                        <td>{{ $contact['company'] }}</td>
                                         <td width="150">
-                                            <a href="{{ route('contacts.show', $id) }}" ><i class="fa fa-eye"></i></a>
+                                            <a href="{{ route('contacts.show', $id) }}"><i class="fa fa-eye"></i></a>
+                                            <a href="#" class="btn btn-sm btn-circle btn-outline-secondary" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <a href="#" class="btn btn-sm btn-circle btn-outline-danger" title="Delete" onclick="confirm('Are you sure?')"><i class="fa fa-times"></i></a>
                                         </td>
                                     </tr>
                                 <?php endforeach ?>
