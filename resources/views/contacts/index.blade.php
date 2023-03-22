@@ -35,9 +35,9 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($contacts as $id => $contact)
-                                        @include ('contacts.contact', ['id' => $id, 'contact' => $contact])
+                                        @includeIf ('contacts.contact', ['id' => $id, 'contact' => $contact])
                                     @empty
-                                        <p>No contact found</p>
+                                        @includeIf('contacts.empty')
                                     @endforelse
                                 </tbody>
                             </table>
