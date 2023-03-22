@@ -35,23 +35,28 @@ Route::get('/', function () {
     return $html_content;
 });
 
-Route::get('/contacts', function () {
-    return "<h1>All contacts</h1>";
-})
-    ->name("contacts.index");
+Route::prefix("contacts")->name("contacts.")->group(
+    function () {
 
-Route::get('/contacts/create', function () {
-    return "<h1>Create new contact</h1>";
-})
-    ->name("contacts.create");;
+        Route::get('/', function () {
+            return "<h1>All contacts</h1>";
+        })
+            ->name("index");
 
-// Routes parameters
-Route::get('/contacts/{id}', function ($id) {
-    return "Contact " . $id;
-})
-    // ->where("id", "\d+") // use regex for contraining
-    ->whereNumber("id") // use build-in function for constraining
-    ->name("contacts.show");;
+        Route::get('/create', function () {
+            return "<h1>Create new contact</h1>";
+        })
+            ->name("create");;
+
+        // Routes parameters
+        Route::get('/{id}', function ($id) {
+            return "Contact " . $id;
+        })
+            // ->where("id", "\d+") // use regex for contraining
+            ->whereNumber("id") // use build-in function for constraining
+            ->name("show");;
+    }
+);
 
 // Optional parameters
 Route::get('/companies/{name?}', function ($company_name = null) {
