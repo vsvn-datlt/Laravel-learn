@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>@yield("title", "Contact App")</title>
+    <title>@yield('title', 'Contact App')</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Varela+Round">
     {{-- Bootstrap --}}
@@ -22,9 +22,10 @@
             <a class="navbar-brand text-uppercase" href="#">
                 <strong>Contact</strong> App
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-toggler" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-toggler"
+                aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-            </button>
+            </button>7
 
             {{-- /.navbar-header --}}
             <div class="collapse navbar-collapse" id="navbar-toggler">
@@ -36,7 +37,8 @@
                     <li class="nav-item mr-2"><a href="#" class="btn btn-outline-secondary">Login</a></li>
                     <li class="nav-item"><a href="#" class="btn btn-outline-primary">Register</a></li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             EMoi
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -49,7 +51,7 @@
         </div>
     </nav>
 
-    @yield("content")
+    @yield('content')
 
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
