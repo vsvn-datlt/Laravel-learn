@@ -3,10 +3,10 @@
     <div class="col-md-6">
         <div class="row">
             <div class="col">
-                <!-- @include("contacts.company_selection") -->
-                <!-- @includeIf("contacts.company_selection") -->
-                <!-- @includeWhere(!empty("$companies"), "contacts.company_selection") -->
-                @includeUnless(empty("$companies"), "contacts.company_selection")
+                {{-- @include("contacts.company_selection") --}}
+                {{-- @includeIf("contacts.company_selection") --}}
+                {{-- @includeWhen(!empty($companies), "contacts.company_selection") --}}
+                @includeUnless(empty($companies), "contacts.company_selection")
             </div>
             <div class="col">
                 <div class="input-group mb-3">

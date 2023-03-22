@@ -3,7 +3,7 @@
 @section("title", "Contact App | Create New Contacts")
 
 @section("content")
-<!-- content -->
+{{-- content --}}
 <main class="py-5">
     <div class="container">
         <div class="row justify-content-md-center">

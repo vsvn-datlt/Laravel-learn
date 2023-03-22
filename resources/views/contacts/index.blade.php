@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <!-- @include("contacts.filter") -->
+                        {{-- @include("contacts.filter") --}}
                         @include("contacts.filter", ["companies" => $companies])
                         <table class="table table-striped table-hover">
                             <thead>
@@ -33,21 +33,33 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($contacts as $id => $contact) : ?>
-                                    <tr>
-                                        <th scope="row">{{ $id }}</th>
-                                        <td>{{ $contact['first_name'] }}</td>
-                                        <td>{{ $contact['last_name'] }}</td>
-                                        <td>{{ $contact['phone'] }}</td>
-                                        <td>{{ $contact['email'] }}</td>
-                                        <td>{{ $contact['company'] }}</td>
-                                        <td width="150">
-                                            <a href="{{ route('contacts.show', $id) }}"><i class="fa fa-eye"></i></a>
-                                            <a href="#" class="btn btn-sm btn-circle btn-outline-secondary" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <a href="#" class="btn btn-sm btn-circle btn-outline-danger" title="Delete" onclick="confirm('Are you sure?')"><i class="fa fa-times"></i></a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach ?>
+                                {{-- <?php if (!empty($contacts)) : ?> --}}
+                                {{-- @if (!empty($contacts)) --}}
+                                {{-- <?php foreach ($contacts as $id => $contact) : ?> --}}
+                                {{-- @foreach ($contacts as $id => $contact) --}}
+                                @forelse ($contacts as $id => $contact)
+                                <tr>
+                                    <th scope="row">{{ $id }}</th>
+                                    <td>{{ $contact['first_name'] }}</td>
+                                    <td>{{ $contact['last_name'] }}</td>
+                                    <td>{{ $contact['phone'] }}</td>
+                                    <td>{{ $contact['email'] }}</td>
+                                    <td>{{ $contact['company'] }}</td>
+                                    <td width="150">
+                                        <a href="{{ route('contacts.show', $id) }}"><i class="fa fa-eye"></i></a>
+                                        <a href="#" class="btn btn-sm btn-circle btn-outline-secondary" title="Edit"><i class="fa fa-edit"></i></a>
+                                        <a href="#" class="btn btn-sm btn-circle btn-outline-danger" title="Delete" onclick="confirm('Are you sure?')"><i class="fa fa-times"></i></a>
+                                    </td>
+                                </tr>
+                                {{-- <?php endforeach ?> --}}
+                                {{-- @endforeach --}}
+                                {{-- <?php else : ?> --}}
+                                {{-- @else --}}
+                                @empty
+                                <p>No contact found</p>
+                                {{-- <?php endif ?> --}}
+                                {{-- @endif --}}
+                                @endforelse
                             </tbody>
                         </table>
 
