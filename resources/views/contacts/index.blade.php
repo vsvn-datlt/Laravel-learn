@@ -38,8 +38,10 @@
                                 {{-- <?php foreach ($contacts as $id => $contact) : ?> --}}
                                 {{-- @foreach ($contacts as $id => $contact) --}}
                                 @forelse ($contacts as $id => $contact)
+                                {{-- @continue($id == 1) --}}
+                                {{-- @break($id == 3) --}}
                                 <tr>
-                                    <th scope="row">{{ $id }}</th>
+                                    <th scope="row">{{ $loop->index }}</th>
                                     <td>{{ $contact['first_name'] }}</td>
                                     <td>{{ $contact['last_name'] }}</td>
                                     <td>{{ $contact['phone'] }}</td>
