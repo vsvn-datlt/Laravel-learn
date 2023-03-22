@@ -27,13 +27,15 @@ Route::prefix("contacts")->name("contacts.")->group(
             ->name("index");
 
         Route::get('/create', function () {
-            return "<h1>Create new contact</h1>";
+            // return "<h1>Create new contact</h1>";
+            return view("contacts/create");
         })
             ->name("create");;
 
         // Routes parameters
         Route::get('/{id}', function ($id) {
-            return "Contact " . $id;
+            // return "Contact " . $id;
+            return view("contacts/show");
         })
             // ->where("id", "\d+") // use regex for contraining
             ->whereNumber("id") // use build-in function for constraining
