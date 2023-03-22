@@ -21,8 +21,14 @@ Route::prefix("contacts")->name("contacts.")->group(
     function () {
 
         Route::get('/', function () {
+            $contacts = [
+                1 => ['name' => 'Name 1', 'phone' => '1234567890'],
+                2 => ['name' => 'Name 2', 'phone' => '2345678901'],
+                3 => ['name' => 'Name 3', 'phone' => '3456789012'],
+            ];
+            
             // return "<h1>All contacts</h1>";
-            return view("contacts/index");
+            return view("contacts/index", ["contacts"=>$contacts]);
         })
             ->name("index");
 

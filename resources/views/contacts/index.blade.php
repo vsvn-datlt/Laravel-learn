@@ -14,6 +14,10 @@
     <a href=' {{ route("contacts.create") }}'>Add new contact</a>
     <a href='{{ route("contacts.show", 1) }}'>Show contact</a>
 
+    <?php foreach ($contacts as $id => $contact):?>
+    <p>{{ $contact['name'] }} | {{ $contact['phone'] }} | <a href="{{ route('contacts.show', $id) }}">{{ $contact['name'] }}</a></p>
+    <?php endforeach?>
+
 </body>
 
 </html>
