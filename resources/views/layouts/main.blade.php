@@ -25,7 +25,7 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-toggler"
                 aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-            </button>7
+            </button>
 
             {{-- /.navbar-header --}}
             <div class="collapse navbar-collapse" id="navbar-toggler">
