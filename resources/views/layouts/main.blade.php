@@ -29,8 +29,8 @@
             <!-- /.navbar-header -->
             <div class="collapse navbar-collapse" id="navbar-toggler">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a href="#" class="nav-link">Companies</a></li>
-                    <li class="nav-item active"><a href="#" class="nav-link">Contacts</a></li>
+                    <li class="nav-item"><a href='{{ route("contacts.create") }}' class="nav-link">Add contact</a></li>
+                    <li class="nav-item active"><a href='{{ route("contacts.show", 1) }}' class="nav-link">Show contact</a></li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mr-2"><a href="#" class="btn btn-outline-secondary">Login</a></li>
@@ -49,7 +49,7 @@
         </div>
     </nav>
 
-    {{-- content --}}
+    @yield("content")
 
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
