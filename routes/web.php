@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +50,13 @@ Route::get('/companies/{name?}', function ($company_name = null) {
     // ->where("name", "[a-zA-Z ]+") // use regex for contraining
     ->whereAlpha("id") // use build-in function for constraining
     ->name("company_name");
+
+Route::resource("/companies", CompanyController::class);
+
+Route::resources([
+    "/tags" => TagController::class,
+    "/tasks" => TaskController::class
+]);
 
 // Fallback routes
 Route::fallback(function () {
