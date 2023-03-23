@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\CompanyController;
@@ -57,6 +58,12 @@ Route::resources([
     "/tags" => TagController::class,
     "/tasks" => TaskController::class
 ]);
+
+Route::resource('/activities', ActivityController::class)
+    // ->except()
+    ->only(
+        ["create", "store", "edit", "update", "destroy"]
+    );
 
 // Fallback routes
 Route::fallback(function () {
