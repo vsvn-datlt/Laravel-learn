@@ -21,9 +21,9 @@ Route::get('/', function () {
 })
     ->name("index");
 
-Route::prefix("contacts")->name("contacts.")->group(
+// Route::prefix("contacts")->name("contacts.")->group(
+Route::controller(ContactController::class)->name("contacts.")->group(
     function () {
-
         Route::get('/', [ContactController::class, "index"])
             ->name("index");
 
@@ -52,4 +52,5 @@ Route::get('/companies/{name?}', function ($company_name = null) {
 // Fallback routes
 Route::fallback(function () {
     return "<h1>Sorry, the page does not exist</h1>";
-});
+})
+    ->name("fallback");
