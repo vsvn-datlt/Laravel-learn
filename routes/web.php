@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\ContactController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,13 +17,11 @@ use App\Http\Controllers\ContactController;
 
 
 
-Route::get('/', function () {
-    return view("welcome");
-})
+// Route::get('/', [WelcomeController::class, "home"])
+Route::get("/", WelcomeController::class)
     ->name("index");
 
-// Route::prefix("contacts")->name("contacts.")->group(
-Route::controller(ContactController::class)->name("contacts.")->group(
+Route::controller(ContactController::class)->prefix("contacts")->name("contacts.")->group(
     function () {
         Route::get('/', [ContactController::class, "index"])
             ->name("index");
