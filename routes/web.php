@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,58 +14,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-function getCompanies()
-{
-    return [
-        1 => ["name" => "Company One", "contacts" => 3409647897],
-        2 => ["name" => "Company Two", "contacts" => 8765679960],
-        3 => ["name" => "Company Three", "contacts" => 8747964336]
-    ];
-}
 
-function getContacts()
-{
-    return [
-        1 => ['first_name' => 'Alfred', "last_name" => "Kuhlman", "email" => "alfred@gmail.com", 'phone' => '7863510562', "company" => "Company One", "address" => "Lorem ipsum dolor"],
-        2 => ['first_name' => 'Frederick', "last_name" => "Jerde", "email" => "frederick@gmail.com", 'phone' => '9465258086', "company" => "Company One", "address" => "Lorem ipsum dolor"],
-        3 => ['first_name' => 'Joannie', "last_name" => "McLaughlin", "email" => "joannie@gmail.com", 'phone' => '2568876437', "company" => "Company Two", "address" => "Lorem ipsum dolor"],
-        4 => ['first_name' => 'Odie', "last_name" => "Koss", "email" => "odie@gmail.com", 'phone' => '9896874639', "company" => "Company Two", "address" => "Lorem ipsum dolor"],
-        5 => ['first_name' => 'Edna', "last_name" => "Ondricka", "email" => "edna@gmail.com", 'phone' => '4698596834', "company" => "Company Three", "address" => "Lorem ipsum dolor"],
-    ];
-}
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view("welcome");
+})
+    ->name("index");
 
 Route::prefix("contacts")->name("contacts.")->group(
     function () {
 
-        Route::get('/', function () {
-            $contacts = getContacts();
-            $companies = getCompanies();
-            // return "<h1>All contacts</h1>";
-            return view("contacts/index", ["contacts" => $contacts, "companies" => $companies]);
-            // return view("contacts/index")->with("contacts", $contacts);
-        })
+        Route::get('/', [ContactController::class, "index"])
             ->name("index");
 
-        Route::get('/create', function () {
-            // return "<h1>Create new contact</h1>";
-            return view("contacts/create");
-        })
-            ->name("create");;
+        Route::get('/create', [ContactController::class, "create"])
+            ->name("create");
 
         // Routes parameters
-        Route::get('/{id}', function ($id) {
-            $contacts = getContacts();
-            // abort_if(!isset($contacts[$id]), 404);
-            abort_unless(isset($contacts[$id]), 404);
-            $contact = $contacts[$id];
-            // return "Contact " . $id;
-            // return view("contacts/show");
-            return view("contacts/show")->with("contact", $contact);
-        })
+        Route::get('/{id}', [ContactController::class, "show"])
             // ->where("id", "\d+") // use regex for contraining
             ->whereNumber("id") // use build-in function for constraining
             ->name("show");
@@ -80,7 +47,7 @@ Route::get('/companies/{name?}', function ($company_name = null) {
 })
     // ->where("name", "[a-zA-Z ]+") // use regex for contraining
     ->whereAlpha("id") // use build-in function for constraining
-;
+    ->name("company_name");
 
 // Fallback routes
 Route::fallback(function () {
