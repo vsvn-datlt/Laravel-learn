@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactNoteController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TagController;
@@ -18,8 +19,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
 
 // Route::get('/', [WelcomeController::class, "home"])
 Route::get("/", WelcomeController::class)
@@ -61,9 +60,15 @@ Route::resources([
 
 Route::resource('/activities', ActivityController::class)
     // ->except()
-    ->only(
-        ["create", "store", "edit", "update", "destroy"]
+    ->only(["create", "store", "index", "show", "update", "destroy"])
+    ->names(
+        [
+            "index" => "activities.all",
+            "show" => "activities.view"
+        ]
     );
+
+Route::resource("contacts.notes", ContactNoteController::class)->shallow();
 
 // Fallback routes
 Route::fallback(function () {
