@@ -2,14 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\CompanyRepository;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
+    // protected $company;
+
+    // public function __construct()
+    // {
+    //     $this->company = new CompanyRepository();
+    // }
+
+    public function __construct(protected CompanyRepository $company)
+    {
+        // $this->company = $company_;
+    }
+
     public function index()
     {
         $contacts = $this->getContacts();
-        $companies = $this->getCompanies();
+        // $companies = $this->getCompanies();
+        $companies = $this->company->pluck();
         // return "<h1>All contacts</h1>";
         return view("contacts/index", ["contacts" => $contacts, "companies" => $companies]);
         // return view("contacts/index")->with("contacts", $contacts);
@@ -26,18 +40,9 @@ class ContactController extends Controller
         return view("contacts/show")->with("contact", $contact);
     }
 
-public function create()
-{
-    return view("contacts/create");
-}
-
-    protected function getCompanies()
+    public function create()
     {
-        return [
-            1 => ["name" => "Company One", "contacts" => 3409647897],
-            2 => ["name" => "Company Two", "contacts" => 8765679960],
-            3 => ["name" => "Company Three", "contacts" => 8747964336]
-        ];
+        return view("contacts/create");
     }
 
     protected function getContacts()
