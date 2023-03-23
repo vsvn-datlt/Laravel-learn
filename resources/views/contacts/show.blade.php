@@ -1,6 +1,7 @@
-@extends('layouts.main')
+@extends('layouts.public')
 
 @section('title', 'Contact App | Show')
+@section("logo_contact_app_ref", 'index')
 
 @section('content')
 

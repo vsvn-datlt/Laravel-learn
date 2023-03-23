@@ -17,11 +17,14 @@
 
 <body>
     {{-- navbar --}}
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand text-uppercase" href="{{ route('contacts.index') }}">
+            {{-- <a class="navbar-brand text-uppercase" href="{{ route('contacts.index') }}"> --}}
+            <a class="navbar-brand text-uppercase" href="{{ route($__env->yieldContent('logo_contact_app_ref')) }}">
                 <strong>Contact</strong> App
             </a>
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-toggler"
                 aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

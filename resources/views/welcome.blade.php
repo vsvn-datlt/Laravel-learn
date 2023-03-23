@@ -1,5 +1,7 @@
 @extends('layouts.public')
 
+@section("logo_contact_app_ref", 'contacts.index')
+
 @section('content')
     <div class="py-5 bg-white">
         <div class="px-4 my-5 text-center">
