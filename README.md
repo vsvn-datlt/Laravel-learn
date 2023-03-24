@@ -8,6 +8,7 @@
 - [Xampp](https://udomain.dl.sourceforge.net/project/xampp/XAMPP%20Windows/8.0.25/xampp-windows-x64-8.0.25-0-VS16-installer.exe) version 8.0.25
 - PHP 8.0.25 (cli) (built: Oct 25 2022 10:49:29) ( ZTS Visual C++ 2019 x64 )
 - Laravel Installer 4.5.0
+- Mysql  Ver 15.1 Distrib 10.4.27-MariaDB, for Win64 (AMD64),
 
 ## Install laravel project
 
@@ -16,7 +17,6 @@
     ```bash
     composer global require laravel/installer 
     ```
-
 
 1. Create project
 
@@ -89,6 +89,12 @@
         npm install
         ```
 
+    - Generate JS, CSS, image for system
+
+        ```bash
+        npm run dev
+        ```
+
     - Create a copy of your .env file
 
         ```bash
@@ -116,6 +122,108 @@
         ```bash
         php artisan db:seed
         ```
+
+    - Recompile blade template
+
+        ```bash
+        php artisan view:cache
+        ```
+
+## Database
+
+1. `CREATE DATABASE` - create a new SQL database
+
+    ```sql
+    CREATE DATABASE contact_app;
+    ```
+
+1. `SHOW DATABASE` - list all exist database
+
+    ```sql
+    SHOW DATABASE;
+    ```
+
+1. `DESCRIBE` - show table's information
+
+    ```sql
+    DESCRIBE migrations
+    ```
+
+1. `ALTER DATABASE` - change the characteristics of a database
+
+    ```sql
+    ALTER DATABASE database_name [COLLATE collation_name]
+    ```
+
+1. `USE` - select a database to work with
+
+    ```sql
+    USE contact_app;
+    ```
+
+1. `CREATE TABLE` - create a new table in the database
+
+    ```sql
+    CREATE TABLE table_name (
+        column_1 datatype,
+        column_2 datatype,
+        column_3 datatype
+    );
+    ```
+
+1. `SHOW TABLES` - list all exist tables in database 
+
+    ```sql
+    SHOW TABLES;
+    ```
+
+1. `ALTER TABLE` - add, delete, or modify columns in an existing table.
+
+    ```sql
+    ALTER TABLE table_name ADD column_name datatype;
+    ```
+
+1. `DROP TABLE` - delete an existing table in a database
+
+    ```sql
+    DROP TABLE table_name;
+    ```
+
+1. `SELECT` - fetch data from a database
+
+    ```sql
+    SELECT column_name FROM table_name;
+    ```
+
+1. `UPDATE` - edit rows in a table
+
+    ```sql
+    UPDATE table_name SET some_column = some_value WHERE some_column = some_value;
+    ```
+
+1. `DELETE` - remove rows from a table
+
+    ```sql
+    DELETE FROM table_name WHERE some_column = some_value;
+    ```
+
+1. `INSERT INTO` - add a new row to a table
+
+    ```sql
+    INSERT INTO table_name (column_1, column_2, column_3) VALUES (value_1, ‘value_2’, value_3);
+    ```
+
+1. `CREATE INDEX` - create an index
+
+    ```sql
+    CREATE INDEX index_name ON table_name (column_name1, column_name2…);
+    ```
+
+1. `DROP INDEX` - delete an index
+
+    ```sql
+    ALTER TABLE table_name DROP INDEX index_name;
+    ```
 
 ## Note
 
