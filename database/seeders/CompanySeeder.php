@@ -7,6 +7,8 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Factory as Faker;
 
+use App\Models\Company;
+
 class CompanySeeder extends Seeder
 {
     /**
@@ -32,5 +34,4 @@ class CompanySeeder extends Seeder
 
         DB::table("companies")->delete();
         DB::table("companies")->insert($companies);
-    }
-}
+    }}
