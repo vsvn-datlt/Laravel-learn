@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-
+use Faker\Factory as Faker;
 
 class CompanySeeder extends Seeder
 {
@@ -16,13 +16,14 @@ class CompanySeeder extends Seeder
      */
     public function run()
     {
+        $faker = Faker::create();
         $companies = [];
         foreach (range(1, 100) as $index) {
             $company = [
-                "name" => $name = 'Company ' . substr(md5(mt_rand()), 0, 8),
-                "address" => "Address " . strtolower($name),
-                "website" => "https://" . str_replace(" ", "_", strtolower($name)) . "/home",
-                "email" => "admin@" . str_replace(" ", "_", strtolower($name)) . ".com",
+                "name" => $faker->company(),
+                "address" => $faker->address(),
+                "website" => "https://" . $faker->domainName(),
+                "email" => $faker->email(),
                 "created_at" => now(),
                 "updated_at" => now(),
             ];
