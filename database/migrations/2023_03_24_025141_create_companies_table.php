@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('companies', function (Blueprint $table) {
-            $table->id();
-            $table->string("name")->nullable()->comment("Name of the company");
-            $table->string("address")->nullable()->comment("Address of the company");
-            $table->string("website")->comment("Email of the company");
+            $table->id()->nullable(false);
+            $table->string("name")->nullable(true)->comment("Name of the company");
+            $table->string("address")->nullable(true)->comment("Address of the company");
+            $table->string("website")->nullable(true)->comment("Email of the company");
             $table->timestamps();
         });
     }

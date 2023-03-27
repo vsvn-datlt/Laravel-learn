@@ -19,7 +19,6 @@ class ContactSeeder extends Seeder
     public function run()
     {
         $companyIds = Company::pluck('id')->toArray();
-        print_r($companyIds);
         $faker = Faker::create();
         $companies = [];
         foreach (range(1, 1000) as $index) {
