@@ -4,7 +4,6 @@
 @section("logo_contact_app_ref", 'index')
 
 @section('content')
-
     <main class="py-5">
         <div class="container">
             <div class="row">
@@ -36,9 +35,29 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($contacts as $id => $contact)
-                                        @includeIf ('contacts.contact', ['id' => $id, 'contact' => $contact])
+                                        {{-- @includeIf ('contacts.contact', ['id' => $id, 'contact' => $contact]) --}}
+                                        <tr>
+                                            <th scope="row">{{ $loop->index }}</th>
+                                            <td>{{ $contact->first_name }}</td>
+                                            <td>{{ $contact->last_name }}</td>
+                                            <td>{{ $contact->phone }}</td>
+                                            <td>{{ $contact->email }}</td>
+                                            <td>{{ $contact->company_id }}</td>
+                                            <td width="150">
+                                                <a href="{{ route('contacts.show', ($id + 1)) }}"><i class="fa fa-eye"></i></a>
+                                                <a href="#" class="btn btn-sm btn-circle btn-outline-secondary" title="Edit"><i class="fa fa-edit"></i></a>
+                                                <a href="#" class="btn btn-sm btn-circle btn-outline-danger" title="Delete" onclick="confirm('Are you sure?')"><i class="fa fa-times"></i></a>
+                                            </td>
+                                        </tr>
                                     @empty
-                                        @includeIf('contacts.empty')
+                                        {{-- @includeIf('contacts.empty') --}}
+                                        <tr>
+                                            <td colspan="7">
+                                                <div class="alert alert-warning">
+                                                    No contact found
+                                                </div>
+                                            </td>
+                                        </tr>
                                     @endforelse
                                 </tbody>
                             </table>

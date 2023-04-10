@@ -7,7 +7,8 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Factory as Faker;
 
-use App\Models\Company as Company;
+use App\Models\Company;
+use App\Models\Contact;
 
 class ContactSeeder extends Seeder
 {
@@ -21,7 +22,7 @@ class ContactSeeder extends Seeder
         $companyIds = Company::pluck('id')->toArray();
         $faker = Faker::create();
         $companies = [];
-        foreach (range(1, 1000) as $index) {
+        foreach (range(1, 50) as $index) {
             $company = [
                 "first_name" => $faker->firstName(),
                 "last_name" => $faker->lastName(),
