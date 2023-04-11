@@ -10,7 +10,7 @@ class ContactController extends Controller
 {
     public function index()
     {
-        $contacts = Contact::all();
+        // $contacts = Contact::all();
         // $companies = $this->getCompanies();
         // $companies = Company::orderBy("name", "ASC")->pluck("name", "id");
         $companies = Company::orderBy("name", "ASC")->get();
@@ -19,6 +19,7 @@ class ContactController extends Controller
         foreach ($companies as $company) {
             $data[$company->id] = $company->name . "  (" . $company->contacts()->count() . ")";
         }
+        $contacts = Contact::latest()->paginate(PAGINATION_CONTACT);
         return view("contacts/index", ["contacts" => $contacts, "companies" => $companies, "company_count" => $data]);
         // return view("contacts/index")->with("contacts", $contacts);
     }
