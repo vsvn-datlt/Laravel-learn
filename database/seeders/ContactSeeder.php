@@ -19,24 +19,26 @@ class ContactSeeder extends Seeder
      */
     public function run()
     {
-        $companyIds = Company::pluck('id')->toArray();
-        $faker = Faker::create();
-        $companies = [];
-        foreach (range(1, 50) as $index) {
-            $company = [
-                "first_name" => $faker->firstName(),
-                "last_name" => $faker->lastName(),
-                "phone" => $faker->phoneNumber(),
-                "email" => $faker->email(),
-                "address" => $faker->address(),
-                'company_id' => $companyIds[array_rand($companyIds)],
-                "created_at" => now(),
-                "updated_at" => now(),
-            ];
-            $companies[] = $company;
-        }
+        // $companyIds = Company::pluck('id')->toArray();
+        // $faker = Faker::create();
+        // $companies = [];
+        // foreach (range(1, 50) as $index) {
+        //     $company = [
+        //         "first_name" => $faker->firstName(),
+        //         "last_name" => $faker->lastName(),
+        //         "phone" => $faker->phoneNumber(),
+        //         "email" => $faker->email(),
+        //         "address" => $faker->address(),
+        //         "company_id" => $companyIds[array_rand($companyIds)],
+        //         "created_at" => now(),
+        //         "updated_at" => now(),
+        //     ];
+        //     $companies[] = $company;
+        // }
 
-        DB::table("contacts")->delete();
-        DB::table("contacts")->insert($companies);
+        // DB::table("contacts")->delete();
+        // DB::table("contacts")->insert($companies);
+
+        Contact::factory(145)->create();
     }
 }
