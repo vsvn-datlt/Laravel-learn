@@ -20,7 +20,7 @@
                         </div>
                         <div class="card-body">
                             {{-- @include("contacts.filter") --}}
-                            @include('contacts.filter', ['companies' => $companies])
+                            @include('contacts.filter', ['companies' => $companies, "company_count" => $company_count])
                             <table class="table table-striped table-hover">
                                 <thead>
                                     <tr>
@@ -42,7 +42,7 @@
                                             <td>{{ $contact->last_name }}</td>
                                             <td>{{ $contact->phone }}</td>
                                             <td>{{ $contact->email }}</td>
-                                            <td>{{ $contact->company_id }}</td>
+                                            <td>{{ $contact->company->name }}</td>
                                             <td width="150">
                                                 <a href="{{ route('contacts.show', ($id + 1)) }}"><i class="fa fa-eye"></i></a>
                                                 <a href="#" class="btn btn-sm btn-circle btn-outline-secondary" title="Edit"><i class="fa fa-edit"></i></a>

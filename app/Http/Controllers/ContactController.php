@@ -12,9 +12,14 @@ class ContactController extends Controller
     {
         $contacts = Contact::all();
         // $companies = $this->getCompanies();
-        $companies = Company::orderBy("name", "ASC")->pluck("name", "id");
+        // $companies = Company::orderBy("name", "ASC")->pluck("name", "id");
+        $companies = Company::orderBy("name", "ASC")->get();
         // return "<h1>All contacts</h1>";
-        return view("contacts/index", ["contacts" => $contacts, "companies" => $companies]);
+        $data = [];
+        foreach ($companies as $company) {
+            $data[$company->id] = $company->name . "  (" . $company->contacts()->count() . ")";
+        }
+        return view("contacts/index", ["contacts" => $contacts, "companies" => $companies, "company_count" => $data]);
         // return view("contacts/index")->with("contacts", $contacts);
     }
 
@@ -28,6 +33,7 @@ class ContactController extends Controller
 
     public function create()
     {
-        return view("contacts/create");
+        $companies = Company::orderBy("name", "ASC")->pluck("name", "id");
+        return view("contacts/create", ["companies" => $companies]);
     }
 }

@@ -6,7 +6,8 @@
                 {{-- @include("contacts.company_selection") --}}
                 {{-- @includeIf("contacts.company_selection") --}}
                 {{-- @includeWhen(!empty($companies), "contacts.company_selection") --}}
-                @includeUnless(empty($companies), 'contacts.company_selection')
+                {{-- @includeUnless(empty($companies), 'contacts.company_selection') --}}
+                @includeUnless(empty($company_count), "contacts.company_selection")
             </div>
             <div class="col">
                 <div class="input-group mb-3">
