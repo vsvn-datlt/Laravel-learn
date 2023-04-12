@@ -19,9 +19,23 @@ class ContactController extends Controller
         foreach ($companies as $company) {
             $data[$company->id] = $company->name . "  (" . $company->contacts()->count() . ")";
         }
-        $contacts = Contact::latest()->paginate(PAGINATION_CONTACT);
+        // $contacts = Contact::latest()->paginate(PAGINATION_CONTACT);
+        $contacts = Contact::latest()
+            ->where(
+                function ($query) {
+                    if (request()->has("company_id") && request()->query("company_id") != "")
+                        $query->where("company_id", intval(request()->query("company_id")));
+                }
+            )
+            ->where(
+                function ($query) {
+                    if (request()->has("search") && request()->query("search") != "")
+                        $query->where("first_name", "LIKE", "%" . request()->query("search") . "%")
+                            ->orwhere("last_name", "LIKE", "%" . request()->query("search") . "%");
+                }
+            )
+            ->paginate(PAGINATION_CONTACT);
         return view("contacts/index", ["contacts" => $contacts, "companies" => $companies, "company_count" => $data]);
-        // return view("contacts/index")->with("contacts", $contacts);
     }
 
     public function show($id)

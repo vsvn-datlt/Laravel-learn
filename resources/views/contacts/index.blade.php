@@ -20,9 +20,9 @@
                         </div>
                         <div class="card-body">
                             {{-- @include("contacts.filter") --}}
-                            @include('contacts.filter', [
-                                'companies' => $companies,
-                                'company_count' => $company_count,
+                            @include("contacts.filter", [
+                                "companies" => $companies,
+                                "company_count" => $company_count,
                             ])
                             <table class="table table-striped table-hover">
                                 <thead>

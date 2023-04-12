@@ -18,7 +18,6 @@
 
 <body>
     {{-- navbar --}}
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             {{-- <a class="navbar-brand text-uppercase" href="{{ route('contacts.index') }}"> --}}
