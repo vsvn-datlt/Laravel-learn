@@ -26,11 +26,11 @@ Route::get("/", WelcomeController::class)
 
 Route::controller(ContactController::class)->prefix("contacts")->name("contacts.")->group(
     function () {
-        Route::get('/', [ContactController::class, "index"])
-            ->name("index");
+        Route::get('/', [ContactController::class, "index"])->name("index");
 
-        Route::get('/create', [ContactController::class, "create"])
-            ->name("create");
+        Route::get('/create', [ContactController::class, "create"])->name("create");
+
+        Route::post('/store', [ContactController::class, 'store'])->name('store');
 
         // Routes parameters
         Route::get('/{id}', [ContactController::class, "show"])

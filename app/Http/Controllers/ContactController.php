@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Contact;
 use App\Models\Company;
+use Faker\Factory as Faker;
 
 class ContactController extends Controller
 {
@@ -48,7 +49,20 @@ class ContactController extends Controller
 
     public function create()
     {
-        $companies = Company::orderBy("name", "ASC")->pluck("name", "id");
-        return view("contacts/create", ["companies" => $companies]);
+        $companies = Company::orderBy("name", "ASC")->select(["name", "id"])->pluck("name", "id");
+        $faker = Faker::create();
+        $fake_contact = [
+            "first_name" => $faker->firstName(),
+            "last_name" => $faker->lastName(),
+            "phone" => $faker->phoneNumber(),
+            "email" => $faker->email(),
+            "address" => $faker->address(),
+        ];
+        return view("contacts/create", ["companies" => $companies, "fake_contact" => $fake_contact]);
+    }
+
+    public function store()
+    {
+        dd('Store');
     }
 }
