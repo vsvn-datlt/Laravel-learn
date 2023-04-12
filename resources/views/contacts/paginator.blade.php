@@ -6,8 +6,11 @@
         }
         ?>
         <li class="page-item previous {{ $paginator->onFirstPage() ? 'disabled' : '' }}">
-            <a class="page-link" href="{{ $paginator->previousPageUrl() }}" tabindex="-1"><i
-                    class="bi bi-chevron-bar-left"></i></a>
+            <a class="page-link"
+                href="{{ $paginator->previousPageUrl() .
+                    (request()->filled('company_id') ? '&' . http_build_query(['company_id' => request()->query('company_id')]) : '') .
+                    (request()->filled('search') ? '&' . http_build_query(['search' => request()->query('search')]) : '') }}"
+                tabindex="-1"><i class="bi bi-chevron-bar-left"></i></a>
         </li>
         @for ($i = 1; $i <= $paginator->lastPage(); $i++)
             <?php
@@ -23,12 +26,19 @@
             ?>
             @if ($from < $i && $i < $to)
                 <li class="page-item {{ $paginator->currentPage() == $i ? ' active' : '' }}" style="z-index: 0;">
-                    <a class="page-link" href="{{ $paginator->url($i) }}">{{ $i }}</a>
+                    <a class="page-link"
+                        href="{{ $paginator->url($i) .
+                            (request()->filled('company_id') ? '&' . http_build_query(['company_id' => request()->query('company_id')]) : '') .
+                            (request()->filled('search') ? '&' . http_build_query(['search' => request()->query('search')]) : '') }}">{{ $i }}</a>
                 </li>
             @endif
         @endfor
         <li class="page-item next {{ $paginator->lastPage() == $paginator->currentPage() ? 'disabled' : '' }}">
-            <a class="page-link" href="{{ $paginator->nextPageUrl() }}"><i class="bi bi-chevron-bar-right"></i></a>
+            <a class="page-link"
+                href="{{ $paginator->nextPageUrl() .
+                    (request()->filled('company_id') ? '&' . http_build_query(['company_id' => request()->query('company_id')]) : '') .
+                    (request()->filled('search') ? '&' . http_build_query(['search' => request()->query('search')]) : '') }}"><i
+                    class="bi bi-chevron-bar-right"></i></a>
         </li>
     </ul>
 </nav>

@@ -24,13 +24,13 @@ class ContactController extends Controller
         $contacts = Contact::latest()
             ->where(
                 function ($query) {
-                    if (request()->has("company_id") && request()->query("company_id") != "")
+                    if (request()->filled("company_id"))
                         $query->where("company_id", intval(request()->query("company_id")));
                 }
             )
             ->where(
                 function ($query) {
-                    if (request()->has("search") && request()->query("search") != "")
+                    if (request()->filled("search"))
                         $query->where("first_name", "LIKE", "%" . request()->query("search") . "%")
                             ->orwhere("last_name", "LIKE", "%" . request()->query("search") . "%");
                 }
@@ -52,17 +52,26 @@ class ContactController extends Controller
         $companies = Company::orderBy("name", "ASC")->select(["name", "id"])->pluck("name", "id");
         $faker = Faker::create();
         $fake_contact = [
-            "first_name" => $faker->firstName(),
-            "last_name" => $faker->lastName(),
-            "phone" => $faker->phoneNumber(),
-            "email" => $faker->email(),
-            "address" => $faker->address(),
+            "first_name" => (request()->old("first_name") != null) ? request()->old("first_name") : $faker->firstName(),
+            "last_name" => (request()->old("last_name") != null) ? request()->old("last_name") : $faker->lastName(),
+            "phone" => (request()->old("phone") != null) ? request()->old("phone") : $faker->phoneNumber(),
+            "email" => (request()->old("email") != null) ? request()->old("email") : $faker->email(),
+            "address" => (request()->old("address") != null) ? request()->old("address") : $faker->address(),
+            "company_id" => (request()->old("company_id") != null) ? request()->old("company_id") : Company::first()->pluck("id")->random(),
         ];
         return view("contacts/create", ["companies" => $companies, "fake_contact" => $fake_contact]);
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        dd('Store');
+        $request->validate([
+            "first_name" => "required|string|max:50",
+            "last_name" => "required|string|max:50",
+            "email" => "required|email",
+            "phone" => "nullable",
+            "address" => "nullable",
+            "company_id" => "required|exists:companies,id"
+        ]);
+        dd($request->all());
     }
 }

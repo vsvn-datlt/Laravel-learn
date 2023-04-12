@@ -20,10 +20,7 @@
                         </div>
                         <div class="card-body">
                             {{-- @include("contacts.filter") --}}
-                            @include("contacts.filter", [
-                                "companies" => $companies,
-                                "company_count" => $company_count,
-                            ])
+                            @include("contacts.filter", ["companies" => $companies, "company_count" => $company_count, ])
                             <table class="table table-striped table-hover">
                                 <thead>
                                     <tr>
@@ -40,20 +37,18 @@
                                     @forelse ($contacts as $id => $contact)
                                         {{-- @includeIf ('contacts.contact', ['id' => $id, 'contact' => $contact]) --}}
                                         <tr>
-                                            <th scope="row">{{ $loop->iteration }}</th>
+                                            <th scope="row">
+                                                {{ ($contacts->currentPage() - 1) * PAGINATION_CONTACT + $loop->iteration }}
+                                            </th>
                                             <td>{{ $contact->first_name }}</td>
                                             <td>{{ $contact->last_name }}</td>
                                             <td>{{ $contact->phone }}</td>
                                             <td>{{ $contact->email }}</td>
                                             <td>{{ $contact->company->name }}</td>
                                             <td width="150">
-                                                <a href="{{ route('contacts.show', $id + 1) }}"><i
-                                                        class="fa fa-eye"></i></a>
-                                                <a href="#" class="btn btn-sm btn-circle btn-outline-secondary"
-                                                    title="Edit"><i class="fa fa-edit"></i></a>
-                                                <a href="#" class="btn btn-sm btn-circle btn-outline-danger"
-                                                    title="Delete" onclick="confirm('Are you sure?')"><i
-                                                        class="fa fa-times"></i></a>
+                                                <a href="{{ route('contacts.show', $contact->id) }}"><i class="fa fa-eye"></i></a>
+                                                <a href="#" class="btn btn-sm btn-circle btn-outline-secondary" title="Edit"><i class="fa fa-edit"></i></a>
+                                                <a href="#" class="btn btn-sm btn-circle btn-outline-danger" title="Delete" onclick="confirm('Are you sure?')"><i class="fa fa-times"></i></a>
                                             </td>
                                         </tr>
                                     @empty
