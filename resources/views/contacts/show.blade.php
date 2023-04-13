@@ -1,10 +1,10 @@
-@extends('layouts.public')
+@extends("layouts.public")
 
-@section('title', 'Contact App | Show')
-@section("logo_contact_app_ref", 'index')
+@section("title", "Contact App | Show")
 
-@section('content')
+@section("logo_contact_app_ref", "contacts.index")
 
+@section("content")
     {{-- content --}}
     <main class="py-5">
         <div class="container">
@@ -54,15 +54,15 @@
                                     <div class="form-group row">
                                         <label for="company_id" class="col-md-3 col-form-label">Company</label>
                                         <div class="col-md-9">
-                                            <p class="form-control-plaintext text-muted">{{ $contact->company_id }}</p>
+                                            <p class="form-control-plaintext text-muted">{{ $contact->name }}</p>
                                         </div>
                                     </div>
                                     <hr>
                                     <div class="form-group row mb-0">
                                         <div class="col-md-9 offset-md-3">
-                                            <a href="#" class="btn btn-info">Edit</a>
+                                            <a href="{{ route("contacts.edit", $contact->id) }}" class="btn btn-info">Edit</a>
                                             <a href="#" class="btn btn-outline-danger">Delete</a>
-                                            <a href="{{ route('contacts.index') }}"
+                                            <a href="{{ route("contacts.index") }}"
                                                 class="btn btn-outline-secondary">Cancel</a>
                                         </div>
                                     </div>
