@@ -51,6 +51,7 @@ class ContactController extends Controller
     {
         $companies = Company::orderBy("name", "ASC")->select(["name", "id"])->pluck("name", "id");
         $faker = Faker::create();
+        // dd(request()->old());
         $fake_contact = [
             "first_name" => (request()->old("first_name") != null) ? request()->old("first_name") : $faker->firstName(),
             "last_name" => (request()->old("last_name") != null) ? request()->old("last_name") : $faker->lastName(),
@@ -72,6 +73,7 @@ class ContactController extends Controller
             "address" => "nullable",
             "company_id" => "required|exists:companies,id"
         ]);
-        dd($request->all());
+        Contact::create($request->all());
+        return redirect()->route('contacts.index')->with('message', 'Contact has been added successfully');
     }
 }
