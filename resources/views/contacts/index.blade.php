@@ -20,7 +20,13 @@
                         </div>
                         <div class="card-body">
                             {{-- @include("contacts.filter") --}}
-                            @include("contacts.filter", ["companies" => $companies, "company_count" => $company_count, ])
+                            @include('contacts.filter', [
+                                'companies' => $companies,
+                                'company_count' => $company_count,
+                            ])
+                            @if ($message = session('message'))
+                                <div class="alert alert-success">{{ $message }}</div>
+                            @endif
                             <table class="table table-striped table-hover">
                                 <thead>
                                     <tr>
@@ -46,9 +52,13 @@
                                             <td>{{ $contact->email }}</td>
                                             <td>{{ $contact->company->name }}</td>
                                             <td width="150">
-                                                <a href="{{ route('contacts.show', $contact->id) }}"><i class="fa fa-eye"></i></a>
-                                                <a href="#" class="btn btn-sm btn-circle btn-outline-secondary" title="Edit"><i class="fa fa-edit"></i></a>
-                                                <a href="#" class="btn btn-sm btn-circle btn-outline-danger" title="Delete" onclick="confirm('Are you sure?')"><i class="fa fa-times"></i></a>
+                                                <a href="{{ route('contacts.show', $contact->id) }}"><i
+                                                        class="fa fa-eye"></i></a>
+                                                <a href="#" class="btn btn-sm btn-circle btn-outline-secondary"
+                                                    title="Edit"><i class="fa fa-edit"></i></a>
+                                                <a href="#" class="btn btn-sm btn-circle btn-outline-danger"
+                                                    title="Delete" onclick="confirm('Are you sure?')"><i
+                                                        class="fa fa-times"></i></a>
                                             </td>
                                         </tr>
                                     @empty
@@ -64,7 +74,7 @@
                                 </tbody>
                             </table>
 
-                            @include("contacts.paginator", ["paginator" => $contacts])
+                            @include('contacts.paginator', ['paginator' => $contacts])
                         </div>
                     </div>
                 </div>
