@@ -28,12 +28,12 @@ Route::controller(ContactController::class)->prefix("contacts")->name("contacts.
     function () {
         Route::get('/', [ContactController::class, "index"])->name("index");
         Route::get('/create', [ContactController::class, "create"])->name("create");
-        Route::post('/store', [ContactController::class, 'store'])->name('store');
-
-        // Routes parameters
+        Route::post('/', [ContactController::class, 'store'])->name('store');
         Route::get('/{id}', [ContactController::class, "show"])->whereNumber("id")->name("show");
         Route::get('/{id}/edit', [ContactController::class, 'edit'])->where("id", "\d+")->name('edit');
         Route::put('/{id}', [ContactController::class, 'update'])->name('update');
+        Route::delete('/{id}', [ContactController::class, 'destroy'])->name('destroy');
+        // Route::resource('/', ContactController::class);
     }
 );
 

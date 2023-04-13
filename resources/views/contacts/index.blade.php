@@ -1,9 +1,9 @@
 @extends ("layouts.public")
 
-@section("title", "Contact App | All Contacts")
-@section("logo_contact_app_ref", "index")
+@section('title', 'Contact App | All Contacts')
+@section('logo_contact_app_ref', 'index')
 
-@section("content")
+@section('content')
     <main class="py-5">
         <div class="container">
             <div class="row">
@@ -20,11 +20,11 @@
                         </div>
                         <div class="card-body">
                             {{-- @include("contacts.filter") --}}
-                            @include("contacts.filter", [
-                                "companies" => $companies,
-                                "company_count" => $company_count,
+                            @include('contacts.filter', [
+                                'companies' => $companies,
+                                'company_count' => $company_count,
                             ])
-                            @if ($message = session("message"))
+                            @if ($message = session('message'))
                                 <div class="alert alert-success">{{ $message }}</div>
                             @endif
                             <table class="table table-striped table-hover">
@@ -49,17 +49,34 @@
                                             <td>{{ $contact->first_name }}</td>
                                             <td>{{ $contact->last_name }}</td>
                                             <td>{{ $contact->phone }}</td>
-                                            <td>{{ $contact->email }}</td>
-                                            <td>{{ $contact->company->name }}</td>
+                                            <td>
+                                                @if (strlen($contact->email) > MAX_LEN_TEXT)
+                                                    {{ substr($contact->email, 0, MAX_LEN_TEXT - 3) . '...' }}
+                                                @else
+                                                    {{ $contact->email }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (strlen($contact->company->name) > MAX_LEN_TEXT)
+                                                    {{ substr($contact->company->name, 0, MAX_LEN_TEXT - 3) . '...' }}
+                                                @else
+                                                    {{ $contact->company->name }}
+                                                @endif
+                                            </td>
                                             <td width="150">
-                                                <a href="{{ route("contacts.show", $contact->id) }}"><i
+                                                <a href="{{ route('contacts.show', $contact->id) }}"
+                                                    class="btn btn-sm btn-circle btn-outline-info"><i
                                                         class="fa fa-eye"></i></a>
-                                                <a href="{{ route("contacts.edit", $contact->id) }}"
+                                                <a href="{{ route('contacts.edit', $contact->id) }}"
                                                     class="btn btn-sm btn-circle btn-outline-secondary" title="Edit"><i
                                                         class="fa fa-edit"></i></a>
-                                                <a href="#" class="btn btn-sm btn-circle btn-outline-danger"
-                                                    title="Delete" onclick="confirm("Are you sure?")"><i
-                                                        class="fa fa-times"></i></a>
+                                                <form action="{{ route('contacts.destroy', $contact->id) }}" method="POST"
+                                                    onsubmit="return confirm('Are you sure?')" style="display: inline">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-sm btn-circle btn-outline-danger"
+                                                        title="Delete"><i class="fa fa-times"></i></button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @empty
@@ -75,7 +92,7 @@
                                 </tbody>
                             </table>
 
-                            @include("contacts.paginator", ["paginator" => $contacts])
+                            @include('contacts.paginator', ['paginator' => $contacts])
                         </div>
                     </div>
                 </div>

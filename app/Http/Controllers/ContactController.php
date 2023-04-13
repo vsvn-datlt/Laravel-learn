@@ -7,6 +7,7 @@ use App\Models\Contact;
 use App\Models\Company;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 
 class ContactController extends Controller
 {
@@ -54,11 +55,13 @@ class ContactController extends Controller
     {
         $companies = Company::orderBy("name", "ASC")->select(["name", "id"])->pluck("name", "id");
         $faker = Faker::create();
+        $first_name = $faker->firstName();
+        $last_name = $faker->lastName();
         $fake_contact = [
-            "first_name" => request()->old("first_name", $faker->firstName()),
-            "last_name" => request()->old("last_name", $faker->lastName()),
+            "first_name" => request()->old("first_name", $first_name),
+            "last_name" => request()->old("last_name", $last_name),
             "phone" => request()->old("phone", $faker->phoneNumber()),
-            "email" => request()->old("email", $faker->email()),
+            "email" => request()->old("email", strtolower($first_name) . "." . strtolower($last_name) . "@" . explode("@", $faker->email())[1]),
             "address" => request()->old("address", $faker->address()),
             // "company_id" => request()->old("company_id",  Company::first()->pluck("id")->random()),
             "company_id" => request()->old("company_id",  -1),
@@ -82,6 +85,7 @@ class ContactController extends Controller
             "address" => "nullable",
             "company_id" => "required|exists:companies,id"
         ]);
+
         Contact::create($request->all());
         return redirect()->route("contacts.index")->with("message", "Contact has been added successfully");
     }
@@ -152,14 +156,15 @@ class ContactController extends Controller
             "address" => "nullable",
             "company_id" => "required|exists:companies,id"
         ]);
-        Contact::updateOrCreate([
+        $contact = Contact::findOrFail($id);
+        $contact->update([
             "first_name" => $request["first_name"],
             "last_name" => $request["last_name"],
-            "email" => $request["email"],
             "phone" => $request["phone"],
             "address" => $request["address"],
             "company_id" => $request["company_id"]
         ]);
+
         return redirect()->route("contacts.show", $id)->with("message", "Contact has been updated successfully");
     }
 
@@ -171,6 +176,8 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $contact = Contact::findOrFail($id);
+        $contact->delete();
+        return redirect(route("contacts.index"))->with('message', 'Contact has been removed successfully');
     }
 }
