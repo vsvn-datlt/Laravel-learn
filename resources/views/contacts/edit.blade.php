@@ -1,10 +1,10 @@
-@extends("layouts.public")
+@extends('layouts.public')
 
-@section("title", "Contact App | Create New Contacts")
+@section('title', 'Contact App | Edit Contacts')
 
-@section("logo_contact_app_ref", "contacts.index")
+@section('logo_contact_app_ref', 'contacts.index')
 
-@section("content")
+@section('content')
     {{-- content --}}
     <main class="py-5">
         <div class="container">
@@ -12,12 +12,13 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header card-title">
-                            <strong>Add New Contact</strong>
+                            <strong>Edit Contact</strong>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route("contacts.store") }}" method="POST">
+                            <form action="{{ route('contacts.update', $contact['id']) }}" method="POST">
                                 @csrf
-                                @include("contacts.form")
+                                @method('put')
+                                @include('contacts.form')
                             </form>
                         </div>
                     </div>

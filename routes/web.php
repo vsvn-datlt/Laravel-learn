@@ -27,16 +27,13 @@ Route::get("/", WelcomeController::class)
 Route::controller(ContactController::class)->prefix("contacts")->name("contacts.")->group(
     function () {
         Route::get('/', [ContactController::class, "index"])->name("index");
-
         Route::get('/create', [ContactController::class, "create"])->name("create");
-
         Route::post('/store', [ContactController::class, 'store'])->name('store');
 
         // Routes parameters
-        Route::get('/{id}', [ContactController::class, "show"])
-            // ->where("id", "\d+") // use regex for contraining
-            ->whereNumber("id") // use build-in function for constraining
-            ->name("show");
+        Route::get('/{id}', [ContactController::class, "show"])->whereNumber("id")->name("show");
+        Route::get('/{id}/edit', [ContactController::class, 'edit'])->where("id", "\d+")->name('edit');
+        Route::put('/{id}', [ContactController::class, 'update'])->name('update');
     }
 );
 
@@ -71,7 +68,7 @@ Route::resource('/activities', ActivityController::class)
 Route::resource("contacts.notes", ContactNoteController::class)->shallow();
 
 // Fallback routes
-Route::fallback(function () {
-    return "<h1>Sorry, the page does not exist</h1>";
-})
-    ->name("fallback");
+// Route::fallback(function () {
+//     return "<h1>Sorry, the page does not exist</h1>";
+// })
+//     ->name("fallback");

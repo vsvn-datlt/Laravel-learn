@@ -1,9 +1,9 @@
 @extends ("layouts.public")
 
-@section('title', 'Contact App | All Contacts')
-@section('logo_contact_app_ref', 'index')
+@section("title", "Contact App | All Contacts")
+@section("logo_contact_app_ref", "index")
 
-@section('content')
+@section("content")
     <main class="py-5">
         <div class="container">
             <div class="row">
@@ -13,18 +13,18 @@
                             <div class="d-flex align-items-center">
                                 <h2 class="mb-0">All Contacts</h2>
                                 <div class="ml-auto">
-                                    <a href='{{ route('contacts.create') }}' class="btn btn-success"><i
+                                    <a href="{{ route('contacts.create') }}" class="btn btn-success"><i
                                             class="fa fa-plus-circle"></i> Add New</a>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
                             {{-- @include("contacts.filter") --}}
-                            @include('contacts.filter', [
-                                'companies' => $companies,
-                                'company_count' => $company_count,
+                            @include("contacts.filter", [
+                                "companies" => $companies,
+                                "company_count" => $company_count,
                             ])
-                            @if ($message = session('message'))
+                            @if ($message = session("message"))
                                 <div class="alert alert-success">{{ $message }}</div>
                             @endif
                             <table class="table table-striped table-hover">
@@ -41,7 +41,7 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($contacts as $id => $contact)
-                                        {{-- @includeIf ('contacts.contact', ['id' => $id, 'contact' => $contact]) --}}
+                                        {{-- @includeIf ("contacts.contact", ["id" => $id, "contact" => $contact]) --}}
                                         <tr>
                                             <th scope="row">
                                                 {{ ($contacts->currentPage() - 1) * PAGINATION_CONTACT + $loop->iteration }}
@@ -52,17 +52,18 @@
                                             <td>{{ $contact->email }}</td>
                                             <td>{{ $contact->company->name }}</td>
                                             <td width="150">
-                                                <a href="{{ route('contacts.show', $contact->id) }}"><i
+                                                <a href="{{ route("contacts.show", $contact->id) }}"><i
                                                         class="fa fa-eye"></i></a>
-                                                <a href="#" class="btn btn-sm btn-circle btn-outline-secondary"
-                                                    title="Edit"><i class="fa fa-edit"></i></a>
+                                                <a href="{{ route("contacts.edit", $contact->id) }}"
+                                                    class="btn btn-sm btn-circle btn-outline-secondary" title="Edit"><i
+                                                        class="fa fa-edit"></i></a>
                                                 <a href="#" class="btn btn-sm btn-circle btn-outline-danger"
-                                                    title="Delete" onclick="confirm('Are you sure?')"><i
+                                                    title="Delete" onclick="confirm("Are you sure?")"><i
                                                         class="fa fa-times"></i></a>
                                             </td>
                                         </tr>
                                     @empty
-                                        {{-- @includeIf('contacts.empty') --}}
+                                        {{-- @includeIf("contacts.empty") --}}
                                         <tr>
                                             <td colspan="7">
                                                 <div class="alert alert-warning">
@@ -74,7 +75,7 @@
                                 </tbody>
                             </table>
 
-                            @include('contacts.paginator', ['paginator' => $contacts])
+                            @include("contacts.paginator", ["paginator" => $contacts])
                         </div>
                     </div>
                 </div>
