@@ -10,6 +10,9 @@
 - Laravel Installer 4.5.0
 - Mysql  Ver 15.1 Distrib 10.4.27-MariaDB, for Win64 (AMD64),
 
+
+- [Docker image](https://hub.docker.com/r/hienanh/laravel-env)
+
 ## Install laravel project
 
 1. Download Laravel Installer using Composer
