@@ -13,8 +13,8 @@
                             <div class="d-flex align-items-center">
                                 <h2 class="mb-0">All Contacts</h2>
                                 <div class="ml-auto">
-                                    <a href="{{ route('contacts.create') }}" class="btn btn-success"><i
-                                            class="fa fa-plus-circle"></i> Add New</a>
+                                    <a href="{{ route('contacts.create') }}" class="btn btn-success">
+                                        <i class="fa fa-plus-circle"></i> Add New</a>
                                 </div>
                             </div>
                         </div>
@@ -25,7 +25,15 @@
                                 'company_count' => $company_count,
                             ])
                             @if ($message = session('message'))
-                                <div class="alert alert-success">{{ $message }}</div>
+                                <div class="alert alert-success">{{ $message }}
+                                    @if ($undoRoute = session("undoRoute"))
+                                        <form action="{{ $undoRoute}}" method="POST" style="display: inline">
+                                            @csrf
+                                            @method("delete")
+                                            <button class="btn alert-link">Undo</button>
+                                        </form>
+                                    @endif
+                                </div>
                             @endif
                             <table class="table table-striped table-hover">
                                 <thead>
@@ -40,6 +48,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $showTrashButtons = request()->query('trash') ? true : false
+                                    @endphp
                                     @forelse ($contacts as $id => $contact)
                                         {{-- @includeIf ("contacts.contact", ["id" => $id, "contact" => $contact]) --}}
                                         <tr>
@@ -64,19 +75,32 @@
                                                 @endif
                                             </td>
                                             <td width="150">
-                                                <a href="{{ route('contacts.show', $contact->id) }}"
-                                                    class="btn btn-sm btn-circle btn-outline-info"><i
-                                                        class="fa fa-eye"></i></a>
-                                                <a href="{{ route('contacts.edit', $contact->id) }}"
-                                                    class="btn btn-sm btn-circle btn-outline-secondary" title="Edit"><i
-                                                        class="fa fa-edit"></i></a>
-                                                <form action="{{ route('contacts.destroy', $contact->id) }}" method="POST"
-                                                    onsubmit="return confirm('Are you sure?')" style="display: inline">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" class="btn btn-sm btn-circle btn-outline-danger"
-                                                        title="Delete"><i class="fa fa-times"></i></button>
-                                                </form>
+                                                @if ($showTrashButtons)
+                                                    <form action="{{ route('contacts.restore', $contact->id) }}" method="POST" style="display: inline">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="btn btn-sm btn-circle btn-outline-info" title="Restore"><i class="fa fa-undo"></i></button>
+                                                    </form>
+                                                    <form action="{{ route('contacts.force-delete', $contact->id) }}" onsubmit="return alert('Your data will be removed permanently. Are you sure?')" method="POST" style="display: inline">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="btn btn-sm btn-circle btn-outline-danger" title="Delete permanently"><i class="fa fa-times"></i></button>
+                                                    </form>
+                                                @else
+                                                    <a href="{{ route('contacts.show', $contact->id) }}" class="btn btn-sm btn-circle btn-outline-info">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                    <a href="{{ route('contacts.edit', $contact->id) }}" class="btn btn-sm btn-circle btn-outline-secondary" title="Edit">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                    <form action="{{ route('contacts.destroy', $contact->id) }}" method="POST" onsubmit="return confirm('Are you sure?')" style="display: inline">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="btn btn-sm btn-circle btn-outline-danger" title="Trash">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                @endif
                                             </td>
                                         </tr>
                                     @empty

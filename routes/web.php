@@ -20,25 +20,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', [WelcomeController::class, "home"])
+// Route::get("/", [WelcomeController::class, "home"])
 Route::get("/", WelcomeController::class)
     ->name("index");
 
 Route::controller(ContactController::class)->prefix("contacts")->name("contacts.")->group(
     function () {
-        Route::get('/', [ContactController::class, "index"])->name("index");
-        Route::get('/create', [ContactController::class, "create"])->name("create");
-        Route::post('/', [ContactController::class, 'store'])->name('store');
-        Route::get('/{id}', [ContactController::class, "show"])->whereNumber("id")->name("show");
-        Route::get('/{id}/edit', [ContactController::class, 'edit'])->where("id", "\d+")->name('edit');
-        Route::put('/{id}', [ContactController::class, 'update'])->name('update');
-        Route::delete('/{id}', [ContactController::class, 'destroy'])->name('destroy');
-        // Route::resource('/', ContactController::class);
+        Route::get("/", [ContactController::class, "index"])->name("index");
+        Route::get("/create", [ContactController::class, "create"])->name("create");
+        Route::post("/", [ContactController::class, "store"])->name("store");
+        Route::get("/{id}", [ContactController::class, "show"])->whereNumber("id")->name("show");
+        Route::get("/{id}/edit", [ContactController::class, "edit"])->where("id", "\d+")->name("edit");
+        Route::put("/{id}", [ContactController::class, "update"])->name("update");
+        Route::delete("/{id}", [ContactController::class, "destroy"])->name("destroy");
+        Route::delete("/{contact}/restore", [ContactController::class, "restore"])->name("restore");
+        Route::delete("/{contact}/force-delete", [ContactController::class, "forceDelete"])->name("force-delete");
+        // Route::resource("/", ContactController::class);
     }
 );
 
 // Optional parameters
-Route::get('/companies/{name?}', function ($company_name = null) {
+Route::get("/companies/{name?}", function ($company_name = null) {
     if ($company_name)
         return "Company " . $company_name;
     else
@@ -55,7 +57,7 @@ Route::resources([
     "/tasks" => TaskController::class
 ]);
 
-Route::resource('/activities', ActivityController::class)
+Route::resource("/activities", ActivityController::class)
     // ->except()
     ->only(["create", "store", "index", "show", "update", "destroy"])
     ->names(
