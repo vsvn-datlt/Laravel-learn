@@ -29,7 +29,8 @@
                     <a class="page-link"
                         href="{{ $paginator->url($i) .
                             (request()->filled('company_id') ? '&' . http_build_query(['company_id' => request()->query('company_id')]) : '') .
-                            (request()->filled('search') ? '&' . http_build_query(['search' => request()->query('search')]) : '') }}">{{ $i }}</a>
+                            (request()->filled('search') ? '&' . http_build_query(['search' => request()->query('search')]) : '') .
+                            (request()->filled('trash') ? '&' . http_build_query(['trash' => request()->query('trash')]) : '') }}">{{ $i }}</a>
                 </li>
             @endif
         @endfor
@@ -37,7 +38,8 @@
             <a class="page-link"
                 href="{{ $paginator->nextPageUrl() .
                     (request()->filled('company_id') ? '&' . http_build_query(['company_id' => request()->query('company_id')]) : '') .
-                    (request()->filled('search') ? '&' . http_build_query(['search' => request()->query('search')]) : '') }}"><i
+                    (request()->filled('search') ? '&' . http_build_query(['search' => request()->query('search')]) : '') .
+                    (request()->filled('trash') ? '&' . http_build_query(['trash' => request()->query('trash')]) : '') }}"><i
                     class="bi bi-chevron-bar-right"></i></a>
         </li>
     </ul>

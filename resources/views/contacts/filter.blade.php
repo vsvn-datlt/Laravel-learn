@@ -4,6 +4,10 @@
         <form>
             <div class="row">
                 <div class="col">
+                    <a href="{{ request()->fullUrlWithQuery(["trash" => false]) }}" class="btn {{ !request()->query('trash') ? 'text-primary' : 'text-secondary' }}">All</a> |
+                    <a href="{{ request()->fullUrlWithQuery(["trash" => true]) }}" class="btn {{ request()->query('trash') ? 'text-primary' : 'text-secondary' }}">Trash</a>
+                </div>
+                <div class="col">
                     {{-- @include("contacts.company_selection") --}}
                     {{-- @includeIf("contacts.company_selection") --}}
                     {{-- @includeWhen(!empty($companies), "contacts.company_selection") --}}
