@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Contact;
+use App\Http\Requests\ContactRequest;
 use App\Models\Company;
+use App\Models\Contact;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -32,25 +32,21 @@ class ContactController extends Controller
         if (request()->query("trash")) {
             $contacts = $contacts->onlyTrashed();
             $contacts = $contacts->orderBy("deleted_at", "DESC");
-        }
-        else
+        } else
             $contacts = $contacts->orderBy("updated_at", "DESC");
 
-        $contacts = $contacts
-            ->where(
+        $contacts = $contacts->where(
                 function ($query) {
                     if (request()->filled("company_id"))
                         $query->where("company_id", intval(request()->query("company_id")));
                 }
-            )
-            ->where(
+            )->where(
                 function ($query) {
                     if (request()->filled("search"))
                         $query->where("first_name", "LIKE", "%" . request()->query("search") . "%")
                             ->orwhere("last_name", "LIKE", "%" . request()->query("search") . "%");
                 }
-            )
-            ->paginate(PAGINATION_CONTACT);
+            )->paginate(PAGINATION_CONTACT);
         return view("contacts/index", ["contacts" => $contacts, "companies" => $companies, "company_count" => $data]);
     }
 
@@ -72,7 +68,7 @@ class ContactController extends Controller
             "email" => request()->old("email", strtolower($first_name) . "." . strtolower($last_name) . "@" . explode("@", $faker->email())[1]),
             "address" => request()->old("address", $faker->address()),
             // "company_id" => request()->old("company_id",  Company::first()->pluck("id")->random()),
-            "company_id" => request()->old("company_id",  -1),
+            "company_id" => request()->old("company_id", -1),
         ];
         return view("contacts/create", ["companies" => $companies, "contact" => $fake_contact]);
     }
@@ -83,16 +79,9 @@ class ContactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ContactRequest $request)
     {
-        $request->validate([
-            "first_name" => "required|string|max:50",
-            "last_name" => "required|string|max:50",
-            "email" => "required|email",
-            "phone" => "nullable",
-            "address" => "nullable",
-            "company_id" => "required|exists:companies,id"
-        ]);
+        $request->validate($this->rules());
 
         Contact::create($request->all());
         return redirect()->route("contacts.index")->with("message", "Contact has been added successfully");
@@ -112,8 +101,7 @@ class ContactController extends Controller
             ->join("companies", function ($join) use ($id) {
                 $join->on("contacts.company_id", "=", "companies.id")
                     ->where("contacts.id", "=", $id);
-            })
-            ->select("contacts.*", "companies.name")->first();
+            })->select("contacts.*", "companies.name")->first();
         // abort_if(!isset($contacts[$id]), 404);
         // abort_unless(!empty($contact), 404);
         // return view("contacts/show")->with("contact", $contact);
@@ -141,7 +129,7 @@ class ContactController extends Controller
             "phone" => request()->old("phone", $contact["phone"]),
             "email" => request()->old("email", $contact["email"]),
             "address" => request()->old("address", $contact["address"]),
-            "company_id" => request()->old("company_id",  $contact["company_id"]),
+            "company_id" => request()->old("company_id", $contact["company_id"]),
         ];
 
         return view("contacts/edit", ["companies" => $companies, "contact" => $contact]);
@@ -154,16 +142,9 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ContactRequest $request, $id)
     {
-        $request->validate([
-            "first_name" => "required|string|max:50",
-            "last_name" => "required|string|max:50",
-            "email" => "required|email",
-            "phone" => "nullable",
-            "address" => "nullable",
-            "company_id" => "required|exists:companies,id"
-        ]);
+        $request->validate($this->rules());
         $contact = Contact::findOrFail($id);
         $contact->update([
             "first_name" => $request["first_name"],

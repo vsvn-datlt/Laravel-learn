@@ -20,6 +20,7 @@ RUN apt update && apt install -y wget gnupg2 && \
     chmod +x /root/xampp-installer.run && echo "Y" | /root/xampp-installer.run && rm -rf /root/xampp-installer.run
 
 RUN sed -i 's/Require local/# Require local\n    Order allow,deny\n    Allow from all\n    Require all granted/g' /opt/lampp/etc/extra/httpd-xampp.conf && \
+    echo "<VirtualHost *:80>\n    ##ServerAdmin webmaster@dummy-host.example.com\n    ServerName localhost\n    DocumentRoot /opt/lampp/htdocs/app/public\n\n    <Directory /opt/lampp/htdocs/app>\n        Options Indexes FollowSymLinks MultiViews\n        AllowOverride All\n        Order allow,deny\n        allow from all\n        Require all granted\n    </Directory>\n</VirtualHost>" | tee /opt/lampp/etc/extra/httpd-vhosts.conf && \
     echo "PATH=/opt/lampp/bin:$PATH" >> ~/.bashrc
 
 RUN echo  "#!/bin/bash\n\n# Loop forever\nwhile true\ndo\n   # Sleep for 10 seconds\n   sleep 10\ndone" | tee /root/script.sh && \
