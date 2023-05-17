@@ -228,6 +228,28 @@
     ALTER TABLE table_name DROP INDEX index_name;
     ```
 
+## Setup fake SMTP server
+
+[https://mailtrap.io/](https://mailtrap.io/)
+
+1. Get credentials
+
+```
+Email Testing > Inboxes > (select a Inbox) > SMTP Setting > Integrations (Laravel 7+) > Copy
+```
+
+2. Config project
+
+```
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+```
+
+
 ## Note
 
 - `routes\web.php`: define routes.
