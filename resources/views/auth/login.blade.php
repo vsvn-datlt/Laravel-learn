@@ -9,9 +9,7 @@
     <div class="col-md-4 m-auto">
         <div class="bg-white shadow-sm">
             <h1 class="border-bottom p-4">Login</h1>
-
             <div class="px-4 pt-4">
-
                 <form action="{{ route('login') }}" method="POST">
                     @csrf
                     <div class="mb-3">

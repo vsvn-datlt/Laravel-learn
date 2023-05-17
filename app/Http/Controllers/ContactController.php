@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\Contact;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 class ContactController extends Controller
@@ -18,6 +19,7 @@ class ContactController extends Controller
      */
     public function index()
     {
+        // dd(Auth::user()->id, Auth::id(), auth()->id());
         // $contacts = Contact::all();
         // $companies = $this->getCompanies();
         // $companies = Company::orderBy("name", "ASC")->pluck("name", "id");
