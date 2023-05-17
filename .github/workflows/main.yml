@@ -1,0 +1,43 @@
+name: VSVN_COST_ANALYSIS
+
+on:
+  push:
+    branches: [ "release" ]
+env:
+  DOCKER_USER: ${{secrets.DOCKER_USER}}
+  DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+  REPO_NAME: ${{secrets.REPO_NAME}}
+  PROJECT_PATH: ${{secrets.PROJECT_PATH}}
+  BUILD_TAG: ${{github.ref_name}}.${{github.run_number}}
+  APP_NAME: ${{secrets.APP_NAME}}
+  DB_HOST: ${{secrets.DB_HOST}}
+  DB_PORT: ${{secrets.DB_PORT}}
+  DB_DATABASE: ${{secrets.DB_DATABASE}}
+  DB_USERNAME: ${{secrets.DB_USERNAME}}
+  DB_PASSWORD: ${{secrets.DB_PASSWORD}}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Login to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build image
+      run: docker build -f Dockerfile -t $DOCKER_USER/$REPO_NAME:$BUILD_TAG --build-arg APP_NAME=$APP_NAME --build-arg DB_HOST=$DB_HOST --build-arg DB_PORT=$DB_PORT --build-arg DB_DATABASE=$DB_DATABASE --build-arg DB_USERNAME=$DB_USERNAME --build-arg DB_PASSWORD=$DB_PASSWORD .
+    - name: Push image
+      run: docker push $DOCKER_USER/$REPO_NAME:$BUILD_TAG
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Deploy the Docker image # push The image to the docker hub
+        run: |
+          cd $PROJECT_PATH &&
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD &&
+          cat vsvn_cost_analysis-compose.yml | sed "s/BUILD_TAG/$BUILD_TAG/g;" | docker compose -f - up -d

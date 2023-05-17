@@ -34,8 +34,8 @@
 
     ```bash
     php artisan serve 
-    php artisan serve --port=8080
-    php artisan serve --port=8080 --host=0.0.0.0
+    php artisan serve --port=8000
+    php artisan serve --port=8000 --host=0.0.0.0
     ```
 
 1. Laravel project structure

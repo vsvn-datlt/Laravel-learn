@@ -1,0 +1,8 @@
+<IfModule mod_rewrite.c>
+   RewriteEngine On
+   RewriteCond %{REQUEST_URI} !^/public/
+
+   RewriteRule ^fonts/(.*)$ fonts/$1 [L]
+
+   RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
