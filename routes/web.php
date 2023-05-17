@@ -24,8 +24,8 @@ use Illuminate\Support\Facades\Route;
 // Route::get("/", [WelcomeController::class, "home"])
 Route::get("/", WelcomeController::class)->name("index");
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', DashboardController::class)->name("dashboard")/*->middleware(['auth'])*/;
+Route::middleware(["auth", "verified"])->group(function () {
+    Route::get("/dashboard", DashboardController::class)->name("dashboard")/*->middleware(["auth"])*/;
 
     Route::controller(ContactController::class)->prefix("contacts")->name("contacts.")->group(
         function () {

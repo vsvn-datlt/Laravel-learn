@@ -20,18 +20,20 @@
 #     chmod +x /root/xampp-installer.run && echo "Y" | /root/xampp-installer.run && rm -rf /root/xampp-installer.run
 
 # RUN sed -i 's/Require local/# Require local\n    Order allow,deny\n    Allow from all\n    Require all granted/g' /opt/lampp/etc/extra/httpd-xampp.conf && \
-#     echo "<VirtualHost *:80>\n    ##ServerAdmin webmaster@dummy-host.example.com\n    ServerName localhost\n    DocumentRoot /opt/lampp/htdocs/app/public\n\n    <Directory /opt/lampp/htdocs/app>\n        Options Indexes FollowSymLinks MultiViews\n        AllowOverride All\n        Order allow,deny\n        allow from all\n        Require all granted\n    </Directory>\n</VirtualHost>" | tee /opt/lampp/etc/extra/httpd-vhosts.conf && \
-#     echo "PATH=/opt/lampp/bin:$PATH" >> ~/.bashrc
+#     echo "PATH=/opt/lampp/bin:$PATH" | tee -a /root/.bashrc
 
-# RUN echo  "#!/bin/bash\n\n# Loop forever\nwhile true\ndo\n   # Sleep for 10 seconds\n   sleep 10\ndone" | tee /root/script.sh && \
+# RUN printf "#!/bin/bash\n\n# Loop forever\nwhile true\ndo\n   # Sleep for 10 seconds\n   sleep 10\ndone" | tee /root/script.sh > /dev/null 2>&1 && \
 #     chmod +x /root/script.sh
+
+# # Uncomment if you want to config Virtual host
+# # RUN printf '<VirtualHost *:80>\n    DocumentRoot "/opt/lampp/htdocs/app/public"\n    ServerName 127.0.0.1\n    ErrorLog "logs/app-error.log"\n    CustomLog "logs/app-access.log" common\n    <Directory "/opt/lampp/htdocs/app/public">\n        Options Indexes FollowSymLinks MultiViews\n        AllowOverride all\n        Order Deny,Allow\n        Allow from all\n        Require all granted\n    </Directory>\n</VirtualHost>' | tee -a /opt/lampp/etc/extra/httpd-vhosts.conf > /dev/null 2>&1 && \
+# #     sed -i 's/#Include\ etc\/extra\/httpd-vhosts.conf/Include\ etc\/extra\/httpd-vhosts.conf/g' /opt/lampp/etc/httpd.conf
 
 # # Start XAMPP in the background
 # EXPOSE 80 443 3306
 # WORKDIR /opt/lampp/htdocs/app
 # CMD /opt/lampp/xampp start -DFOREGROUND && /root/script.sh
-
-FROM php:8.2.5-apache
+# FROM php:8.2.5-apache
 
 ARG APP_NAME
 ARG DB_HOST
