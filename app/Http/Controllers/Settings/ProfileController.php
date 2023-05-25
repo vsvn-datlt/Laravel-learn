@@ -1,16 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Settings;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class ProfileController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware(['auth']);
-    // }
-
     /**
      * Handle the incoming request.
      *
@@ -19,6 +15,6 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return response()->view('dashboard');
+        return response()->view("settings/profile-information", ["user" => $request->user()]);
     }
 }

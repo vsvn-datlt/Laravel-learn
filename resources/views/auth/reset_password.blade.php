@@ -32,9 +32,11 @@
                         <input type="password" class="form-control" name="password_confirmation" />
                         <input type="hidden" name="token" value="{{ request()->route('token') }}">
                     </div>
+                    <br>
                     <div class="mb-3">
                         <button type="submit" class="btn btn-block btn-primary">Reset Password</button>
                     </div>
+                    <br>
                 </form>
             </div>
         </div>

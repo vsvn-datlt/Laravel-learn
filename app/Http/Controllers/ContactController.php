@@ -49,7 +49,7 @@ class ContactController extends Controller
                             ->orwhere("last_name", "LIKE", "%" . request()->query("search") . "%");
                 }
             )->paginate(PAGINATION_CONTACT);
-        return view("contacts/index", ["contacts" => $contacts, "companies" => $companies, "company_count" => $data]);
+        return response()->view("contacts/index", ["contacts" => $contacts, "companies" => $companies, "company_count" => $data]);
     }
 
     /**
@@ -72,7 +72,7 @@ class ContactController extends Controller
             // "company_id" => request()->old("company_id",  Company::first()->pluck("id")->random()),
             "company_id" => request()->old("company_id", -1),
         ];
-        return view("contacts/create", ["companies" => $companies, "contact" => $fake_contact]);
+        return response()->view("contacts/create", ["companies" => $companies, "contact" => $fake_contact]);
     }
 
     /**
@@ -86,7 +86,7 @@ class ContactController extends Controller
         $request->validate($this->rules());
 
         Contact::create($request->all());
-        return redirect()->route("contacts.index")->with("message", "Contact has been added successfully");
+        return response()->redirect()->route("contacts.index")->with("message", "Contact has been added successfully");
     }
 
     /**
@@ -107,7 +107,7 @@ class ContactController extends Controller
         // abort_if(!isset($contacts[$id]), 404);
         // abort_unless(!empty($contact), 404);
         // return view("contacts/show")->with("contact", $contact);
-        return view("contacts/show", ["contact" => $contact]);
+        return response()->view("contacts/show", ["contact" => $contact]);
     }
 
     /**
@@ -134,7 +134,7 @@ class ContactController extends Controller
             "company_id" => request()->old("company_id", $contact["company_id"]),
         ];
 
-        return view("contacts/edit", ["companies" => $companies, "contact" => $contact]);
+        return response()->view("contacts/edit", ["companies" => $companies, "contact" => $contact]);
     }
 
     /**
@@ -156,7 +156,7 @@ class ContactController extends Controller
             "company_id" => $request["company_id"]
         ]);
 
-        return redirect()->route("contacts.show", $id)->with("message", "Contact has been updated successfully.");
+        return response()->redirect()->route("contacts.show", $id)->with("message", "Contact has been updated successfully.");
     }
 
     /**
@@ -170,9 +170,7 @@ class ContactController extends Controller
         $redirect = request()->query("redirect");
         $contact = Contact::findOrFail($id);
         $contact->delete();
-        return ($redirect ? redirect()->route($redirect) : back())
-                ->with('message', 'Contact has been moved to trash.')
-                ->with("undoRoute", route("contacts.restore", $contact->id));
+        return ($redirect ? response()->redirect()->route($redirect) : back())->with('message', 'Contact has been moved to trash.')->with("undoRoute", route("contacts.restore", $contact->id));
     }
 
     public function restore($id)
