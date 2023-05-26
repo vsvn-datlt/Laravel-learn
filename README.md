@@ -28,54 +28,35 @@
     # or
     cd <project_dir>
     laravel new <project_name>
+    php artisan storage:link
+    php artisan migrate
+    php artisan migrate:fresh --seed
+    php artisan migrate:refresh --seed
     ```
 
 1. Once u're in Laravel proj, fire up the Laravel Dev Server to make app run by:
 
     ```bash
+    composer update
+    composer install
+    composer install --ignore-platform-reqs
+    php artisan key:generate
+
+    npm install
+    npm run dev
+
+    # Migrate database for system
+    php artisan migrate --seed
+
+    # Run seeder to create default for system
+    php artisan db:seed --class=ContactSeeder
+    php artisan db:seed
+    ```
+
+    ```bash
     php artisan serve 
     php artisan serve --port=8000
     php artisan serve --port=8000 --host=0.0.0.0
-    ```
-
-1. Laravel project structure
-
-    - `app` dir: place the business logic of app, Laravel follow `MVC` pattern -> M, and C part are placed in this dir.
-
-    - `config` dir: put the configuration of app.
-
-    - `database` dir: some files working with DB, e.g: defining table schema, defining fake data.
-
-    - `lang` dir: language files for inernationalization.
-
-    - `public` dir: stores files that can be accessed publicly, you can put you images, `CSS` and `JS` files inside.
-
-    - `resources` dir: contains views or files used to build app interface. -> V part of `MVC` is stores in views folder. this dir cũng chứa code JS, CSS đã compiled mà KHÔNG truy cập trực tiếp từ browser
-
-    - `roots` dir: contains all the root definition for app
-
-    - `storage` dir: contains logs, compile blade templates, file based session, file caches, and other file gen by framwork.
-
-    - `test` dir: contains files for automated test.
-
-    - `vendor` dir: all dependencies installed by the composer.
-
-    - `.env` file: contains configs for env
-
-1. Tinker
-
-    ```bash
-    php artisan tinker
-    ```
-
-1. List all of the roots that are defined by app
-
-    ```bash
-    php artisan route:list
-    php artisan route:list --except-vendor
-    php artisan route:list --only-vendor
-    php artisan route:list --path=contacts
-    php artisan route:list --path=contacts -
     ```
 
 1. [Setup a Laravel project](https://devmarketer.io/learn/setup-laravel-project-cloned-github-com/)
@@ -131,6 +112,46 @@
         ```bash
         php artisan view:cache
         ```
+
+1. Laravel project structure
+
+    - `app` dir: place the business logic of app, Laravel follow `MVC` pattern -> M, and C part are placed in this dir.
+
+    - `config` dir: put the configuration of app.
+
+    - `database` dir: some files working with DB, e.g: defining table schema, defining fake data.
+
+    - `lang` dir: language files for inernationalization.
+
+    - `public` dir: stores files that can be accessed publicly, you can put you images, `CSS` and `JS` files inside.
+
+    - `resources` dir: contains views or files used to build app interface. -> V part of `MVC` is stores in views folder. this dir cũng chứa code JS, CSS đã compiled mà KHÔNG truy cập trực tiếp từ browser
+
+    - `roots` dir: contains all the root definition for app
+
+    - `storage` dir: contains logs, compile blade templates, file based session, file caches, and other file gen by framwork.
+
+    - `test` dir: contains files for automated test.
+
+    - `vendor` dir: all dependencies installed by the composer.
+
+    - `.env` file: contains configs for env
+
+1. Tinker
+
+    ```bash
+    php artisan tinker
+    ```
+
+1. List all of the roots that are defined by app
+
+    ```bash
+    php artisan route:list
+    php artisan route:list --except-vendor
+    php artisan route:list --only-vendor
+    php artisan route:list --path=contacts
+    php artisan route:list --path=contacts -
+    ```
 
 ## Database
 

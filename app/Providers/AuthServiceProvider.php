@@ -31,7 +31,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-
         ResetPassword::toMailUsing(function ($notifiable, $token) {
             return (new MailMessage)
                 ->subject("Reset Password Notification")
@@ -41,7 +40,7 @@ class AuthServiceProvider extends ServiceProvider
                     "token" => $token,
                     "email" => $notifiable->getEmailForPasswordReset(),
                 ], false)))
-                ->line(Lang::get("This password reset link will expire in :count minutes.", ["count" => config("auth.passwords.".config("auth.defaults.passwords").".expire")]))
+                ->line(Lang::get("This password reset link will expire in :count minutes.", ["count" => config("auth.passwords." . config("auth.defaults.passwords") . ".expire")]))
                 ->line("If you did not request a password reset, no further action is required.")
                 ->salutation("Contact App Team.");
         });
@@ -58,11 +57,11 @@ class AuthServiceProvider extends ServiceProvider
                         "id" => $notifiable->getKey(),
                         "hash" => sha1($notifiable->getEmailForVerification()),
                     ]
-                ))
+                )
+                )
                 ->line("If you did not create an account, no further action is required.")
                 ->salutation("Contact App Team.");
         });
     }
-
     // Modify the remain part of text in `/resources/views/vendor/notifications/email.blade.php`
 }

@@ -11,6 +11,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\PasswordController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +77,11 @@ Route::middleware(["auth", "verified"])->group(function () {
 
     Route::resource("contacts.notes", ContactNoteController::class)->shallow();
 });
+
+Route::get("/download", function() {
+    Storage::download("myfile.txt");
+});
+
 // Fallback routes
 // Route::fallback(function () {
 //     return "<h1>Sorry, the page does not exist</h1>";
